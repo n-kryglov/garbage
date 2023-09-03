@@ -1,0 +1,55 @@
+import random
+
+def selection_n(ans):
+    if ans == 'да':
+        num = int(input('Введите верхнюю границу отгадываемого числа: '))
+        n = random.randrange(1, num)
+        return n, num
+    else:
+        n = random.randrange(1, 101)
+        num = 100
+        return n, num
+
+def is_valid(n, num):
+    if 1<=n<=num and n == int(n):
+        return True
+    else:
+        return False
+
+def guess_num(n, num):
+    count = 0
+    flag = False
+    while flag == False:
+        print('Введите число от 1 до',num,':')
+        num_g = int(input())
+        count += 1
+        if is_valid(num_g, num) == False:
+            print('А может быть все-таки введем целое число от 1 до', num, '?')
+            continue
+        else:
+            num_int = int(num_g)
+        if n == num_int:
+            flag = True
+            print('Вы угадали, поздравляем!')
+            print('Было сделано попыток:', count)
+            break
+        elif n > num_int:
+            print('Ваше число меньше загаданного, попробуйте еще разок')
+        elif n < num_int:
+            print('Ваше число больше загаданного, попробуйте еще разок')
+
+def start():
+    print('Добро пожаловать в числовую угадайку')
+    print('На данный момент границы числа: от 1 до 100')
+    print('Вы хотите изменить вверхнюю границу?')
+    ans = input('Введите да/нет: ')
+    n, num = selection_n(ans)
+    print('Спасибо! Начинаем угадывать)')
+    guess_num(n, num)
+    print('Хотите ещё поиграть?')
+    an = input('да/нет: ')
+    if an == 'да':
+        start()
+    else:
+        print('Спасибо, что играли в числовую угадайку. Еще увидимся...')
+start()

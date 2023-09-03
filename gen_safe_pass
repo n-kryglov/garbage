@@ -1,0 +1,46 @@
+import random
+
+digits= '0123456789';
+lowercase_letters= 'abcdefghijklmnopqrstuvwxyz';
+uppercase_letters= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+punctuation= '!#$%&*+-=?@^_'
+
+chars = ''
+passwords = []
+quan_pass = int(input('Количество паролей для генерации: '))
+len_pass = int(input('Длина одного пароля: '))
+ques_dig = input('Включать ли цифры? да/нет ')
+if ques_dig == 'да':
+    chars += digits
+ques_capital_lett = input('Включать ли прописные буквы? да/нет ')
+if ques_capital_lett == 'да':
+    chars += uppercase_letters
+ques_str_lett = input('Включать ли строчные буквы? да/нет ')
+if ques_str_lett == 'да':
+    chars += lowercase_letters
+ques_symb = input('Включать ли символы - !#$%&*+-=?@^_ ? да/нет ')
+if ques_symb == 'да':
+    chars += punctuation
+ques_except = input('Исключать ли неоднозначные символы - il1Lo0O ? да/нет ')
+if ques_except == 'да':
+    chars = chars.replace('i', '')
+    chars = chars.replace('l', '')
+    chars = chars.replace('1', '')
+    chars = chars.replace('L', '')
+    chars = chars.replace('o', '')
+    chars = chars.replace('0', '')
+    chars = chars.replace('O', '')
+
+def generate_password(len_pass, chars):
+    for i in range(quan_pass):
+        password = ''
+        for j in range(len_pass):
+            tmp = random.choice(chars)
+            password += tmp
+        passwords.append(password)
+    return passwords
+
+generate_password(len_pass, chars)
+print('Пароли созданы:')
+print(*passwords, sep = '\n')
+

@@ -1,0 +1,68 @@
+#Исходные вопросы
+question_dir = input('Что необходимо сделать: 1. шифровать или 2. дешифровать?\nВведите значение: ')
+while question_dir != '1' and question_dir != '2':
+    question_dir = input('Вы ввели что-то не то. Попробуйте ещё раз\nВведите значение: ')
+
+question_lang = input('На каком языке текст: 1. русский или 2. английский?\nВведите значение: ')
+while question_lang != '1' and question_lang != '2':
+    question_lang = input('Вы ввели что-то не то. Попробуйте ещё раз\nВведите значение: ')
+
+#question_step = input('На сколько символов должен быть сдвиг?\nВведите значение: ')
+#while question_step.isdigit() == False:
+#    question_step = input('Вы ввели что-то не то. Попробуйте ещё раз\nВведите значение: ')
+
+#question_txt = input('Какой текст нужно использовать? \nВведите текст: ')
+#while question_txt.isspace() == True:
+    question_txt = input('Вы ввели что-то не то. Попробуйте ещё раз\nВведите текст: ')
+
+#Шифр Цезаря
+def caesar_cipher(dir, lang, step, txt):
+    ans = ''
+    #словари
+    upper_eng = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    lower_eng = 'abcdefghijklmnopqrstuvwxyz'
+    upper_rus = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+    lower_rus = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
+
+    #цикл по длине текста
+    for i in range(len(txt)):
+        #выбираем алфавит
+        if lang == '1':
+            aplhas = 32
+            lower_alph = lower_rus
+            upper_alph = upper_rus
+        elif lang == '2':
+            aplhas = 26
+            lower_alph = lower_eng
+            upper_alph = upper_eng
+        
+        tmp = txt[i]
+        #проверяем символ
+        if tmp.isalpha() == True:
+            if tmp == tmp.lower():
+                place = lower_alph.index(tmp)
+            else:
+                place = upper_alph.index(tmp)
+        
+            #шифровка/дешифровка
+            if dir == '1':
+                index = (place + int(step)) % aplhas
+            else:
+                index = (place - int(step)) % aplhas
+        
+            #поиск и вывод символа
+            if tmp == tmp.lower():
+                ans += lower_alph[index]
+            else:
+                ans += upper_alph[index]
+        else:
+            ans += tmp
+            ans += ''
+    return ans
+#вызов функции
+txt = input().split(' ')
+for i in range(len(txt)):
+    len_txt = [i for i in txt[i] if i.isalpha()]
+    question_step = len(len_txt)
+    ans = caesar_cipher(question_dir, question_lang, question_step, txt[i])
+    print(ans, end = ' ')
